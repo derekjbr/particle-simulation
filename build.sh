@@ -46,5 +46,5 @@ fi
 
 # Build the project
 echo "Building project with GLFW from: $glfw_path"
-cmake -B ./build -D CMAKE_BUILD_TYPE=Debug -D GLFW_PATH="$glfw_path"
+cmake -B ./build -D CMAKE_BUILD_TYPE=Debug -D GLFW_PATH="$glfw_path" -D CMAKE_EXPORT_COMPILE_COMMANDS=1
 cmake --build ./build -j4
