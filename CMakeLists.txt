@@ -32,10 +32,25 @@ set(GLAD_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/include")
 set(GLAD_SRC "${CMAKE_CURRENT_SOURCE_DIR}/external/glad/src/glad.c")
 
 include_directories(${GLAD_INCLUDE_DIR})
+
+# Add Subdirectories
+add_subdirectory(Renderer)
+add_subdirectory(Utils)
+
+# Main executable
 add_executable(ParticleSimulation main.cpp ${GLAD_SRC})
 
 # Link against GLFW (includes will be handled by the imported target)
 target_link_libraries(ParticleSimulation 
     PRIVATE 
     OpenGL::GL 
-    glfw)
+    glfw
+    Shader)
+
+# Copy Resources to build directory
+add_custom_command(TARGET ParticleSimulation POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    "${CMAKE_CURRENT_SOURCE_DIR}/Resources"
+    "Resources"
+    COMMENT "Copying Resources to build directory"
+)
